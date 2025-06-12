@@ -6,11 +6,25 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:42:27 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/11 20:45:32 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:37:17 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
+char	*get_path_value(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+			return (envp[i] + 5);
+		i++;
+	}
+	return (NULL);
+}
 
 char	*get_cmd_path(char *cmd, char **envp)
 {
@@ -21,16 +35,7 @@ char	*get_cmd_path(char *cmd, char **envp)
 	char	*full_path;
 
 	i = 0;
-	path_value = NULL;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			path_value = envp[i] + 5;
-			break ;
-		}
-		i++;
-	}
+	path_value = get_path_value(envp);
 	if (!path_value)
 		return (NULL);
 	paths = ft_split(path_value, ':');
