@@ -5,7 +5,6 @@ CFLAGS = -Wall -Wextra -Werror -g
 #CFLAGS += -fsanitize=address
 
 SRCS =	src/pipex.c \
-		src/errors.c \
 		src/exec.c \
 		src/init.c \
 		src/utils.c \
