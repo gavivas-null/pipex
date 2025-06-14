@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:17:16 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/14 18:40:27 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/14 20:16:08 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,7 @@ void	assing_child(t_pipex	*px, char **args, char **envp);
 char	*get_cmd_path(char *cmd, char **envp, int i);
 char	*get_path_value(char **envp);
 void	exit_with_error(char *msg, char **split, char *to_free, int code);
+char	**get_paths_array(char **envp);
+char	*find_executable_path(char **paths, char *cmd, int i);
 
 #endif

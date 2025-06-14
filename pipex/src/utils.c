@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:42:27 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/13 22:40:06 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/14 20:17:27 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,25 @@ char	*get_path_value(char **envp)
 	return (NULL);
 }
 
-char	*get_cmd_path(char *cmd, char **envp, int i)
+char	**get_paths_array(char **envp)
 {
+	char	*path_val;
 	char	**paths;
-	char	*temp_path;
-	char	*path_value;
-	char	*full_path;
 
-	path_value = get_path_value(envp);
-	if (!path_value)
+	path_val = get_path_value(envp);
+	if (!path_val)
 		return (NULL);
-	paths = ft_split(path_value, ':');
+	paths = ft_split(path_val, ':');
 	if (!paths)
 		exit_with_error("split paths", NULL, NULL, 1);
+	return (paths);
+}
+
+char	*find_executable_path(char **paths, char *cmd, int i)
+{
+	char	*temp_path;
+	char	*full_path;
+
 	while (paths[i])
 	{
 		temp_path = ft_strjoin(paths[i], "/");
@@ -47,12 +53,31 @@ char	*get_cmd_path(char *cmd, char **envp, int i)
 			exit_with_error("strjoin", paths, temp_path, 1);
 		free(temp_path);
 		if (access(full_path, X_OK) == 0)
-			return (ft_free_split(paths), full_path);
+			return (full_path);
 		free(full_path);
 		i++;
 	}
-	ft_free_split(paths);
 	return (NULL);
+}
+
+char	*get_cmd_path(char *cmd, char **envp, int i)
+{
+	char	**paths;
+	char	*result;
+
+	if (cmd[0] == '/')
+	{
+		if (access(cmd, X_OK) == 0)
+			return (ft_strdup(cmd));
+		else
+			return (NULL);
+	}
+	paths = get_paths_array(envp);
+	if (!paths)
+		return (NULL);
+	result = find_executable_path(paths, cmd, i);
+	ft_free_split(paths);
+	return (result);
 }
 
 void	exit_with_error(char *msg, char **split, char *to_free, int code)
