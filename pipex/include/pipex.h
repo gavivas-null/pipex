@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:17:16 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/13 22:40:21 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:40:27 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_pipex
 {
 	int		infile;
 	int		outfile;
+	int		status_b;
 	int		pipefd[2];
 	char	**envp;
 }	t_pipex;

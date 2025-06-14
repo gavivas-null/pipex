@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:42:20 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/13 22:40:32 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:03:54 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	child_a(t_pipex *px, char *cmd, char **envp)
 	close(px->pipefd[0]);
 	close(px->pipefd[1]);
 	cmd_args = ft_split(cmd, ' ');
-	if (!cmd_args)
-		exit_with_error("split", NULL, NULL, 1);
+	if (!cmd_args || !cmd_args[0])
+		exit_with_error("command not found", cmd_args, NULL, 127);
 	path = get_cmd_path(cmd_args[0], envp, 0);
 	if (!path)
 		exit_with_error("path not found", cmd_args, NULL, 127);
@@ -47,8 +47,8 @@ void	child_b(t_pipex *px, char *cmd, char **envp)
 	close(px->pipefd[0]);
 	close(px->pipefd[1]);
 	cmd_args = ft_split(cmd, ' ');
-	if (!cmd_args)
-		exit_with_error("split", NULL, NULL, 1);
+	if (!cmd_args || !cmd_args[0])
+		exit_with_error("command not found", cmd_args, NULL, 127);
 	path = get_cmd_path(cmd_args[0], envp, 0);
 	if (!path)
 		exit_with_error("path not found", cmd_args, NULL, 127);
