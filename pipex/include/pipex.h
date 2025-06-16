@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:17:16 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/16 19:45:45 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/16 21:21:53 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_pipex
 	int		outfile;
 	int		status_b;
 	int		pipefd[2];
+	int		prev_fd;
 	char	**envp;
 }	t_pipex;
 
@@ -59,5 +60,8 @@ char	*get_path_value(char **envp);
 char	**get_paths_array(char **envp);
 char	*find_executable_path(char **paths, char *cmd, int i);
 void	exec_cmd(char *cmd, char **envp);
+
+//---------------------bonus---------------------
+void	handle_command(t_pipex *px, char *cmd, int input_fd, int output_fd);
 
 #endif
