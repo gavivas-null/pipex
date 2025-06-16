@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:17:16 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/14 20:16:08 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:38:52 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ char	*get_path_value(char **envp);
 void	exit_with_error(char *msg, char **split, char *to_free, int code);
 char	**get_paths_array(char **envp);
 char	*find_executable_path(char **paths, char *cmd, int i);
+void	cmd_error(char *cmd, char **split);
 
 #endif

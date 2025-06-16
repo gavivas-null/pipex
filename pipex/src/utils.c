@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:42:27 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/14 20:17:27 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:04:43 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,4 @@ char	*get_cmd_path(char *cmd, char **envp, int i)
 	result = find_executable_path(paths, cmd, i);
 	ft_free_split(paths);
 	return (result);
-}
-
-void	exit_with_error(char *msg, char **split, char *to_free, int code)
-{
-	perror(msg);
-	if (split)
-		ft_free_split(split);
-	if (to_free)
-		free(to_free);
-	exit(code);
 }

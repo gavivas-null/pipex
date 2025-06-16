@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:42:20 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/14 20:09:36 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:42:09 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	child_a(t_pipex *px, char *cmd, char **envp)
 		exit_with_error("command not found", cmd_args, NULL, 127);
 	path = get_cmd_path(cmd_args[0], envp, 0);
 	if (!path)
-		exit_with_error("path not found", cmd_args, NULL, 127);
+		cmd_error(cmd_args[0], cmd_args);
 	if (execve(path, cmd_args, envp) == -1)
 		exit_with_error("execve", cmd_args, path, 1);
 }
@@ -51,7 +51,7 @@ void	child_b(t_pipex *px, char *cmd, char **envp)
 		exit_with_error("command not found", cmd_args, NULL, 127);
 	path = get_cmd_path(cmd_args[0], envp, 0);
 	if (!path)
-		exit_with_error("path not found", cmd_args, NULL, 127);
+		cmd_error(cmd_args[0], cmd_args);
 	if (execve(path, cmd_args, envp) == -1)
 		exit_with_error("execve", cmd_args, path, 1);
 }

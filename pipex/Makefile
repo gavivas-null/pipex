@@ -8,6 +8,7 @@ SRCS =	src/pipex.c \
 		src/exec.c \
 		src/init.c \
 		src/utils.c \
+		src/error.c
 
 OBJS = $(SRCS:.c=.o)
 INCLUDES = -I include -I Libft

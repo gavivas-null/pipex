@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:42:24 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/13 22:24:40 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:34:58 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,14 @@ void	open_infile(t_pipex *px, char *path)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
-		exit_with_error(path, NULL, NULL, EXIT_FAILURE);
+		ft_putstr_fd("pipex: ", 2);
+		perror(path);
+		px->infile = open("/dev/null", O_RDONLY);
+		if (px->infile == -1)
+			exit_with_error("open /dev/null", NULL, NULL, 1);
 	}
-	px->infile = fd;
+	else
+		px->infile = fd;
 }
 
 void	open_outfile(t_pipex *px, char *path)
