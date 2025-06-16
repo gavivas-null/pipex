@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 18:04:49 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/16 18:43:12 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:46:15 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,21 @@ void	cmd_error(char *cmd, char **split)
 	if (split)
 		ft_free_split(split);
 	exit(127);
+}
+
+int	needs_shell(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '\'' || cmd[i] == '"' || cmd[i] == '|'
+			|| cmd[i] == ';' || cmd[i] == '<' || cmd[i] == '>'
+			|| cmd[i] == '&' || cmd[i] == '$' || cmd[i] == '('
+			|| cmd[i] == ')')
+			return (1);
+		i++;
+	}
+	return (0);
 }

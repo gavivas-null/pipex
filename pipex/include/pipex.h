@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:17:16 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/16 18:38:52 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:45:45 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ typedef struct s_pipex
 	char	**envp;
 }	t_pipex;
 
+//---------------------error---------------------
+int		needs_shell(char *cmd);
+void	exit_with_error(char *msg, char **split, char *to_free, int code);
+void	cmd_error(char *cmd, char **split);
+
 //---------------------init---------------------
 void	open_infile(t_pipex *px, char *path);
 void	open_outfile(t_pipex *px, char *path);
@@ -51,9 +56,8 @@ void	assing_child(t_pipex	*px, char **args, char **envp);
 //---------------------utils---------------------
 char	*get_cmd_path(char *cmd, char **envp, int i);
 char	*get_path_value(char **envp);
-void	exit_with_error(char *msg, char **split, char *to_free, int code);
 char	**get_paths_array(char **envp);
 char	*find_executable_path(char **paths, char *cmd, int i);
-void	cmd_error(char *cmd, char **split);
+void	exec_cmd(char *cmd, char **envp);
 
 #endif
