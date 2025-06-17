@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 20:35:19 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/16 20:35:21 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/17 22:50:20 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	cmd_error(char *cmd, char **split)
 	ft_putendl_fd(": command not found", 2);
 	if (split)
 		ft_free_split(split);
+	write(STDOUT_FILENO, "\n", 1);
 	exit(127);
 }
 
