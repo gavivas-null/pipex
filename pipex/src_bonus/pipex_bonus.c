@@ -6,11 +6,37 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 20:36:20 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/16 22:15:55 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:53:29 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
+void	exec_last_command(t_pipex *px, char *cmd, int *pid)
+{
+	*pid = fork();
+	if (*pid == 0)
+		handle_command(px, cmd, px->prev_fd, px->outfile);
+	if (*pid < 0)
+		exit_with_error("fork pid", NULL, NULL, 1);
+	if (px->pipefd[0] >= 0)
+		close(px->pipefd[0]);
+	close(px->prev_fd);
+}
+
+void	exec_middle_command(t_pipex *px, char *cmd, int *pid)
+{
+	create_pipe(px);
+	*pid = fork();
+	if (*pid == 0)
+		handle_command(px, cmd, px->prev_fd, px->pipefd[1]);
+	if (*pid < 0)
+		exit_with_error("fork pid", NULL, NULL, 1);
+	if (px->pipefd[1] >= 0)
+		close(px->pipefd[1]);
+	close(px->prev_fd);
+	px->prev_fd = px->pipefd[0];
+}
 
 void	execute_pipeline(t_pipex *px, char **args, int argc)
 {
@@ -22,31 +48,14 @@ void	execute_pipeline(t_pipex *px, char **args, int argc)
 	while (i < (argc - 1))
 	{
 		if (i == (argc -2))
-		{
-			pid = fork();
-			if (pid == 0)
-				handle_command(px, args[i], px->prev_fd, px->outfile);
-			if (pid < 0)
-				exit_with_error("fork pid", NULL, NULL, 1);
-			if (px->pipefd[0] >= 0)
-				close(px->pipefd[0]);
-			close(px->prev_fd);
-		}
+			exec_last_command(px, args[i], &pid);
 		else
-		{
-			create_pipe(&px);
-			pid = fork();
-			if (pid == 0)
-				handle_command(px, args[i], px->prev_fd, px->pipefd[1]);
-			if (pid < 0)
-				exit_with_error("fork pid", NULL, NULL, 1);
-			if (px->pipefd[1] >= 0)
-				close(px->pipefd[1]);
-			close(px->prev_fd);
-			px->prev_fd = px->pipefd[0];
-		}
+			exec_middle_command(px, args[i], &pid);
 		i++;
 	}
+	while (wait(NULL) > 0)
+		;
+	waitpid(pid, &px->status_b, 0);
 }
 
 int	main(int argc, char **args, char **envp)
@@ -57,8 +66,13 @@ int	main(int argc, char **args, char **envp)
 		return (ft_putstr_fd(ERRORARGS, 2), 1);
 	px.pipefd[0] = -1;
 	px.pipefd[1] = -1;
+	px.status_b = 0;
+	px.err = 0;
 	px.envp = envp;
-	open_infile(&px, args[1]);
 	open_outfile(&px, args[argc - 1]);
+	open_infile(&px, args[1]);
+	if (px.err == 1)
+		exit(1);
+	execute_pipeline(&px, args, argc);
 	return (WEXITSTATUS(px.status_b));
 }
