@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:42:27 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/16 18:04:43 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/17 19:25:49 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*get_cmd_path(char *cmd, char **envp, int i)
 	char	**paths;
 	char	*result;
 
-	if (cmd[0] == '/')
+	if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
