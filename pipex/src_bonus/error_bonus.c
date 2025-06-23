@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 20:35:19 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/23 19:29:33 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/23 21:53:44 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,17 @@ void	exit_with_error(char *msg, char **split, char *to_free, int code)
 
 void	cmd_error(char *cmd, char **split)
 {
-	ft_putstr_fd(cmd, 2);
-	ft_putendl_fd(": command not found", 2);
+	char	*msg;
+
+	msg = ft_strjoin("pipex_bonus: ", cmd);
+	if (!msg)
+	{
+		if (split)
+			ft_free_split(split);
+		exit(127);
+	}
+	perror(msg);
+	free(msg);
 	if (split)
 		ft_free_split(split);
 	exit(127);
