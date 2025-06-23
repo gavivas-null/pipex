@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 20:36:17 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/17 18:54:08 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:36:08 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	open_infile(t_pipex *px, char *path)
 		px->infile = fd;
 }
 
-void	open_outfile(t_pipex *px, char *path)
+int	open_outfile_bonus(t_pipex *px, char *path)
 {
 	int	fd;
 
@@ -40,8 +40,7 @@ void	open_outfile(t_pipex *px, char *path)
 		perror(path);
 		px->err = 1;
 	}
-	else
-		px->outfile = fd;
+	return (fd);
 }
 
 void	create_pipe(t_pipex *px)

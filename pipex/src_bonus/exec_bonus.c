@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 20:36:14 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/16 21:29:09 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:36:07 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,7 @@ void	exec_cmd(char *cmd, char **envp)
 {
 	char	**cmd_args;
 	char	*path;
-	char	*args[4];
 
-	if (needs_shell(cmd))
-	{
-		args[0] = "sh";
-		args[1] = "-c";
-		args[2] = cmd;
-		args[3] = NULL;
-		execve("/bin/sh", args, envp);
-		exit_with_error("execve", NULL, NULL, 1);
-	}
 	cmd_args = ft_split(cmd, ' ');
 	if (!cmd_args || !cmd_args[0])
 		exit_with_error("command not found", cmd_args, NULL, 127);
@@ -43,9 +33,10 @@ void	handle_command(t_pipex *px, char *cmd, int input_fd, int output_fd)
 		exit_with_error("dup2 input", NULL, NULL, 1);
 	if (dup2(output_fd, STDOUT_FILENO) == -1)
 		exit_with_error("dup2 output", NULL, NULL, 1);
-	if (input_fd != STDIN_FILENO)
-		close(input_fd);
-	if (output_fd != STDOUT_FILENO)
-		close(output_fd);
+	close(input_fd);
+	close(output_fd);
+	close(px->infile);
+	close(px->outfile);
+	close(px->pipefd[0]);
 	exec_cmd(cmd, px->envp);
 }

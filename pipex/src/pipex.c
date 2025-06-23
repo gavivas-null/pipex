@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 18:42:31 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/16 18:30:12 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/22 20:20:43 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ int	main(int argc, char **args, char **envp)
 		return (ft_putstr_fd(ERRORARGS, 2), 1);
 	px.pipefd[0] = -1;
 	px.pipefd[1] = -1;
-	open_infile(&px, args[1]);
 	open_outfile(&px, args[4]);
+	open_infile(&px, args[1]);
 	create_pipe(&px);
 	assing_child(&px, args, envp);
+	close(px.infile);
+	close(px.outfile);
 	return (WEXITSTATUS(px.status_b));
 }

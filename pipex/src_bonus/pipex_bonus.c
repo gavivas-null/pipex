@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 20:36:20 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/06/17 18:53:29 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:06:21 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	execute_pipeline(t_pipex *px, char **args, int argc)
 			exec_middle_command(px, args[i], &pid);
 		i++;
 	}
+	waitpid(pid, &px->status_b, 0);
 	while (wait(NULL) > 0)
 		;
-	waitpid(pid, &px->status_b, 0);
 }
 
 int	main(int argc, char **args, char **envp)
@@ -69,10 +69,16 @@ int	main(int argc, char **args, char **envp)
 	px.status_b = 0;
 	px.err = 0;
 	px.envp = envp;
-	open_outfile(&px, args[argc - 1]);
+	px.outfile = open_outfile_bonus(&px, args[argc - 1]);
 	open_infile(&px, args[1]);
 	if (px.err == 1)
+	{
+		close(px.infile);
+		close(px.outfile);
 		exit(1);
+	}
 	execute_pipeline(&px, args, argc);
+	close(px.infile);
+	close(px.outfile);
 	return (WEXITSTATUS(px.status_b));
 }
