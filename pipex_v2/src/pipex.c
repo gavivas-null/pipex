@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 21:57:20 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/11/16 20:13:55 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/11/16 21:19:30 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,17 @@ int	init_all(t_pipex *px, int argc, char **args, char **envp)
 	if (!min_args_ok(px->is_heredoc, argc))
 		return (ft_putstr_fd(ERRORARGS, 2), EXIT_FAILURE);
 	px->cmd_start = first_cmd_index(px->is_heredoc);
-	px->outfile = open_outfile(px, args[argc - 1]);
-	open_infile(px, args[1]);
+	px->outfile = open_outfile_mode(px, args[argc - 1], px->is_heredoc);
+	if (px->is_heredoc)
+		px->infile = heredoc_make_pipe(px, args[2]);
+	else
+		open_infile(px, args[1]);
 	if (px->err == 1)
 	{
-		close(px->infile);
-		close(px->outfile);
+		if (px->infile >= 0)
+			close(px->infile);
+		if (px->outfile >= 0)
+			close(px->outfile);
 		exit(1);
 	}
 	return (EXIT_SUCCESS);

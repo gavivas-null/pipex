@@ -48,11 +48,17 @@ clean:
 	@$(MAKE) -C Libft clean > /dev/null
 	@echo "🧹 Archivos objeto y temporales eliminados."
 
-fclean: clean
+fclean: clean rm
 	@rm -f $(NAME) > /dev/null
 	@$(MAKE) -C Libft fclean > /dev/null
 	@echo "🧼 Todo limpio: binarios y Libft."
 
+rm:
+	@rm *.txt > /dev/null 2>&1 || true
+	@rm ./outfile > /dev/null 2>&1 || true
+	@rm ./infile > /dev/null 2>&1 || true
+	@echo "🧼 .txt, infile y outfile eliminados."
+
 re: fclean all
 
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re libft rm
