@@ -12,6 +12,8 @@ infile
 outfile
 infile_bash
 outfile_bash
+infile_pipex
+outfile_pipex
 infile_error
 outfile_error
 
