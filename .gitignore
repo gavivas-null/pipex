@@ -1,0 +1,26 @@
+# Compilation Files
+*.o
+*.out
+*.a
+files.txt
+pipex.txt
+
+# Ejecutables
+a.out
+pipex
+infile
+outfile
+infile_bash
+outfile_bash
+infile_error
+outfile_error
+
+# Tmp
+obj/
+build/
+bin/
+
+# Systems Files
+.DS_Store
+.vscode/
+*.log
