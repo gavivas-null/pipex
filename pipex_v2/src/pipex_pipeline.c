@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 20:31:26 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/11/12 21:29:51 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:29:42 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	execute_pipeline(t_pipex *px, char **args, int argc)
 	int	i;
 	int	pid;
 
-	i = 2;
+	i = px->cmd_start;
 	px->prev_fd = px->infile;
 	while (i < (argc - 1))
 	{
