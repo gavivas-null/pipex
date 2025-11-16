@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 20:31:15 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/11/12 21:29:47 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:43:48 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	open_infile(t_pipex *px, char *path)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd("exec: ", 2);
+		ft_putstr_fd("pipex: ", 2);
 		perror(path);
 		px->infile = open("/dev/null", O_RDONLY);
 		if (px->infile == -1)
