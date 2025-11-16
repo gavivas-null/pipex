@@ -14,6 +14,7 @@ SRC	=	$(SRC_DIR)/pipex_core.c \
 		$(SRC_DIR)/pipex_io.c \
 		$(SRC_DIR)/pipex_path.c \
 		$(SRC_DIR)/pipex_pipeline.c \
+		$(SRC_DIR)/pipex_parse.c \
 		$(SRC_DIR)/pipex.c
 
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))

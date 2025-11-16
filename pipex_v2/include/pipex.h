@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 20:37:43 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/11/12 21:29:13 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/11/16 19:27:13 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ typedef struct s_pipex
 	int		status_b;
 	int		pipefd[2];
 	int		prev_fd;
-	char	**envp;
 	int		err;
+	int		is_heredoc;
+	int		cmd_start;
+	char	**envp;
 }	t_pipex;
 
 //---------------------pipex---------------------
@@ -54,5 +56,8 @@ void	handle_command(t_pipex *px, char *cmd, int input_fd, int output_fd);
 void	exec_last_command(t_pipex *px, char *cmd, int *pid);
 void	exec_middle_command(t_pipex *px, char *cmd, int *pid);
 void	execute_pipeline(t_pipex *px, char **args, int argc);
+int		is_heredoc(int argc, char **argv);
+int		first_cmd_index(int is_hd);
+int		min_args_ok(int is_hd, int argc);
 
 #endif
