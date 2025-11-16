@@ -8,9 +8,7 @@ LIBFT = Libft/libft.a
 OBJ_DIR = obj
 
 SRC_DIR = src
-SRC	=	$(SRC_DIR)/pipex_core.c \
-		$(SRC_DIR)/pipex_errors.c \
-		$(SRC_DIR)/pipex_handle.c \
+SRC	=	$(SRC_DIR)/pipex_errors.c \
 		$(SRC_DIR)/pipex_io.c \
 		$(SRC_DIR)/pipex_path.c \
 		$(SRC_DIR)/pipex_pipeline.c \
