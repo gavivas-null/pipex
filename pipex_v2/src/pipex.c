@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 21:57:20 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/11/16 21:19:30 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/11/16 22:10:28 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,20 @@ int	init_all(t_pipex *px, int argc, char **args, char **envp)
 	if (!min_args_ok(px->is_heredoc, argc))
 		return (ft_putstr_fd(ERRORARGS, 2), EXIT_FAILURE);
 	px->cmd_start = first_cmd_index(px->is_heredoc);
+	return (EXIT_SUCCESS);
+}
+
+int	init_in_out(t_pipex *px, int argc, char **args)
+{
 	px->outfile = open_outfile_mode(px, args[argc - 1], px->is_heredoc);
+	if (px->err == 1 || px->outfile < 0)
+		return (EXIT_FAILURE);
 	if (px->is_heredoc)
 		px->infile = heredoc_make_pipe(px, args[2]);
 	else
 		open_infile(px, args[1]);
-	if (px->err == 1)
-	{
-		if (px->infile >= 0)
-			close(px->infile);
-		if (px->outfile >= 0)
-			close(px->outfile);
-		exit(1);
-	}
+	if (px->err == 1 || px->infile < 0)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -46,10 +47,20 @@ int	main(int argc, char **args, char **envp)
 {
 	t_pipex	px;
 
-	if (init_all(&px, argc, args, envp) != 0)
+	if (init_all(&px, argc, args, envp) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
+	if (init_in_out(&px, argc, args) != EXIT_SUCCESS)
+	{
+		if (px.infile >= 0)
+			close(px.infile);
+		if (px.outfile >= 0)
+			close(px.outfile);
+		return (EXIT_FAILURE);
+	}
 	execute_pipeline(&px, args, argc);
-	close(px.infile);
-	close(px.outfile);
+	if (px.infile >= 0)
+		close(px.infile);
+	if (px.outfile >= 0)
+		close(px.outfile);
 	return (WEXITSTATUS(px.status_b));
 }
