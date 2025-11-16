@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 20:37:43 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/11/16 19:27:13 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/11/16 19:52:15 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_pipex
 }	t_pipex;
 
 //---------------------pipex---------------------
+int		init_all(t_pipex*px, int argc, char **args, char **envp);
 char	*get_cmd_path(char *cmd, char **envp, int i);
 char	*find_executable_path(char **paths, char *cmd, int i);
 char	**get_paths_array(char **envp);

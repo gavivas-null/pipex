@@ -6,7 +6,7 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:16:43 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/11/16 19:25:01 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:11:15 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	min_args_ok(int is_hd, int argc)
 	if (is_hd && argc >= 6)
 		return (1);
 	if (!is_hd && argc >= 5)
-		return (0);
+		return (1);
 	return (0);
 }
