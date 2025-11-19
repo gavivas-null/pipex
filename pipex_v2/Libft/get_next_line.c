@@ -6,17 +6,39 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:47:45 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/04/01 19:58:09 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/11/19 20:22:20 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+static char	*ft_process_line(char **data, char *endline)
+{
+	char	*newline;
+	char	*tmp;
+	size_t	rest_len;
+
+	newline = ft_gnl_substr(*data, 0, (endline - *data) + 1);
+	rest_len = ft_gnl_strlen(endline + 1);
+	if (rest_len > 0)
+	{
+		tmp = ft_gnl_substr(*data, (endline - *data) + 1, rest_len);
+		free(*data);
+		*data = tmp;
+	}
+	else
+	{
+		free(*data);
+		*data = NULL;
+	}
+	return (newline);
+}
+
 static char	*ft_extract_line(char **data, char *buff, ssize_t count)
 {
-	char		*tmp;
-	char		*endline;
-	char		*newline;
+	char	*tmp;
+	char	*endline;
+	char	*newline;
 
 	buff[count] = '\0';
 	tmp = ft_gnl_strjoin(*data, buff);
@@ -26,11 +48,12 @@ static char	*ft_extract_line(char **data, char *buff, ssize_t count)
 	endline = ft_gnl_strchr(*data, '\n');
 	if (endline)
 	{
-		newline = ft_gnl_substr(*data, 0, (endline - *data) + 1);
-		tmp = ft_gnl_substr(*data, (endline - *data) + 1,
-				ft_gnl_strlen(endline + 1));
-		free(*data);
-		*data = tmp;
+		newline = ft_process_line(data, endline);
+		if (!newline)
+		{
+			free(buff);
+			return (NULL);
+		}
 		return (newline);
 	}
 	return (NULL);
