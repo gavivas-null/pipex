@@ -6,11 +6,11 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 20:31:15 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/11/23 20:30:58 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/11/12 21:29:47 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libpipex.h>
+#include <pipex.h>
 
 void	open_infile(t_pipex *px, char *path)
 {

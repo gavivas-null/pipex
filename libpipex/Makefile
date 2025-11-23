@@ -2,15 +2,17 @@ NAME = libpipex.a
 
 AR = ar
 ARFLAG = -rcs
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
 INCLUDES = -I ../pipex -I ../Libft
 
-OBJ_DIR = obj
 
-SRC	=	src/pipex_errors.c \
-		src/pipex_io.c \
-		src/pipex_path.c \
-		src/pipex_pipeline.c \
-		src/pipex.c
+SRCS =	pipex_core.c \
+		pipex_errors.c \
+		pipex_handle.c \
+		pipex_io.c \
+		pipex_path.c \
+		pipex_pipeline.c \
 
 OBJS = $(SRCS:.c=.o)
 

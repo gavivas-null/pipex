@@ -6,12 +6,12 @@
 /*   By: gavivas- <gavivas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 20:37:43 by gavivas-          #+#    #+#             */
-/*   Updated: 2025/11/23 20:27:32 by gavivas-         ###   ########.fr       */
+/*   Updated: 2025/11/12 21:29:13 by gavivas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBPIPEX_H
-# define LIBPIPEX_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
 # include <libft.h>
 # include <stdlib.h>
