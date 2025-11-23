@@ -2,50 +2,44 @@ NAME = libpipex.a
 
 AR = ar
 ARFLAG = -rcs
-INCLUDES = -I include -I ../Libft
+INCLUDES = -I ../pipex -I ../Libft
 
 OBJ_DIR = obj
 
-SRC_DIR = src
-SRC	=	$(SRC_DIR)/pipex_errors.c \
-		$(SRC_DIR)/pipex_io.c \
-		$(SRC_DIR)/pipex_path.c \
-		$(SRC_DIR)/pipex_pipeline.c \
-		$(SRC_DIR)/pipex.c
+SRC	=	src/pipex_errors.c \
+		src/pipex_io.c \
+		src/pipex_path.c \
+		src/pipex_pipeline.c \
+		src/pipex.c
 
-OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+OBJS = $(SRCS:.c=.o)
 
 # --------------------------------------------------------------
 # 👇 Regla principal
 # --------------------------------------------------------------
-all: $(OBJ_DIR) $(NAME)
-
-
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(AR) $(ARFLAG) $(NAME) $(OBJS)
-	@echo "✅ Librería libpipex.a creada correctamente."
+	@echo "📦 Librería creada: $(NAME)"
 
 # --------------------------------------------------------------
 # 🛠 Compilar cada archivo fuente
 # --------------------------------------------------------------
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ > /dev/null
+%.o: %.c
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	@echo "🔧 Compilado: $<"
 
 # --------------------------------------------------------------
 # 🧹 Limpieza
 # --------------------------------------------------------------
-
 clean:
-	@rm -rf $(OBJ_DIR) > /dev/null
-	@echo "🧹 Archivos objeto eliminados."
+	@rm -f $(OBJS)
+	@echo "🧹 pipex: objetos eliminados."
 
 fclean: clean
-	@rm -f $(NAME) > /dev/null
-	@echo "🧼 Todo limpio: libpipex.a"
+	@rm -f $(NAME)
+	@echo "🗑️ pipex: lib eliminada."
 
 re: fclean all
 
