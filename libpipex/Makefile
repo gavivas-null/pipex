@@ -2,8 +2,8 @@ NAME = libpipex.a
 
 AR = ar
 ARFLAG = -rcs
-INCLUDES = -I include -I Libft
-LIBFT = Libft/libft.a
+INCLUDES = -I include -I ../Libft
+
 OBJ_DIR = obj
 
 SRC_DIR = src
@@ -18,10 +18,8 @@ OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 # --------------------------------------------------------------
 # 👇 Regla principal
 # --------------------------------------------------------------
-all: $(OBJ_DIR) libft $(NAME)
+all: $(OBJ_DIR) $(NAME)
 
-libft:
-	@$(MAKE) -C Libft > /dev/null
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -43,14 +41,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	@rm -rf $(OBJ_DIR) > /dev/null
-	@$(MAKE) -C Libft clean > /dev/null
 	@echo "🧹 Archivos objeto eliminados."
 
 fclean: clean
 	@rm -f $(NAME) > /dev/null
-	@$(MAKE) -C Libft fclean > /dev/null
-	@echo "🧼 Todo limpio: libpipex.a y libft."
+	@echo "🧼 Todo limpio: libpipex.a"
 
 re: fclean all
 
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re
